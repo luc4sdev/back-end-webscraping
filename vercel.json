@@ -1,0 +1,15 @@
+{
+    "name": "back-end-webscraping",
+    "version": 2,
+    "public": true,
+    "build": {
+        "src": "src/server.js",
+        "use": "@vercel/node"
+    },
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "src/server.js"
+        }
+    ]
+}
