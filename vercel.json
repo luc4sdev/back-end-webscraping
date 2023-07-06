@@ -3,13 +3,13 @@
     "version": 2,
     "public": true,
     "build": {
-        "src": "src/server.js",
+        "src": "api/index.js",
         "use": "@vercel/node"
     },
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "src/server.js"
+            "dest": "api/index.js"
         }
     ]
 }
