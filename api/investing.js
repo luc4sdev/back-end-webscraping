@@ -8,7 +8,7 @@ import puppeteer from 'puppeteer';
       name: 'investing',
       url: 'https://br.investing.com/economic-calendar/',
       mainTag: tag,
-      timeTag: 'js-time',
+      timeTag: 'time',
       currecyTag: 'flagCur',
       eventTag: 'event',
       actualTag: 'act ',

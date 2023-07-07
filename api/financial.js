@@ -6,7 +6,7 @@ import puppeteer from 'puppeteer';
 export async function getFinancialJuiceData(tag) {
 
   const dataFinancialJuice = {
-    name: 'financial juice',
+    name: 'financial',
     url: 'https://www.financialjuice.com/home',
     mainTag: tag,
     row: 'div-table-row',
