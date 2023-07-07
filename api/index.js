@@ -30,6 +30,7 @@ app.use(cors(corsOptions))
 
 route.get('/api/data-forex', async (req, res) => {
   const forexData = await getForexFactoryData('[data-eventid="129141"]')
+  res.header("Access-Control-Allow-Origin", "*");
   res.json(forexData);
 });
 
@@ -37,6 +38,7 @@ route.post('/api/data-forex', async (req, res) => {
   const {tag} = req.body;
   console.log(tag)
   const forexData = await getForexFactoryData(tag)
+  res.header("Access-Control-Allow-Origin", "*");
   res.json(forexData);
 });
 
@@ -44,6 +46,7 @@ route.post('/api/data-financial', async (req, res) => {
   const {tag} = req.body;
   console.log(tag)
   const financialData = await getFinancialJuiceData(tag)
+  res.header("Access-Control-Allow-Origin", "*");
   res.json(financialData);
 });
 
@@ -51,6 +54,7 @@ route.post('/api/data-investing', async (req, res) => {
   const {tag} = req.body;
   console.log(tag)
   const investingData = await getInvestingData(tag)
+  res.header("Access-Control-Allow-Origin", "*");
   res.json(investingData);
 });
 
@@ -58,6 +62,7 @@ route.post('/api/data-economics', async (req, res) => {
   const {tag} = req.body;
   console.log(tag)
   const investingData = await getInvestingData(tag)
+  res.header("Access-Control-Allow-Origin", "*");
   res.json(investingData);
 });
 
