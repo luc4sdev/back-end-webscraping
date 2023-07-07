@@ -1,60 +1,72 @@
 import puppeteer from 'puppeteer';
 
-const dataInvesting = {
-    name: 'investing',
-    url: 'https://br.investing.com/economic-calendar',
-    mainTag: '[event_attr_id="1"]',
-    timeTag: 'js-time',
-    currecyTag: 'flagCur',
-    eventTag: 'event',
-    actualTag: 'event-477008-actual',
-    forecastTag: 'event-477008-forecast',
-    previousTag: 'event-477008-previous',
-    time: '',
-    currency: '',
-    event: '',
-    actual: '',
-    forecast: '',
-    previous: '',
-  }
 
-  export async function getInvestingData() {
+
+  export async function getInvestingData(tag) {
+
+    const dataInvesting = {
+      name: 'investing',
+      url: 'https://br.investing.com/economic-calendar/',
+      mainTag: tag,
+      timeTag: 'js-time',
+      currecyTag: 'flagCur',
+      eventTag: 'event',
+      actualTag: 'act ',
+      forecastTag: 'fore',
+      previousTag: 'prev',
+      time: '',
+      currency: '',
+      event: '',
+      actual: '',
+      forecast: '',
+      previous: '',
+    }
     try {
   
       const browser = await puppeteer.launch({
+        // teste
         headless: 'new',
+        args: [
+          "--disable-setuid-sandbox",
+          "--no-sandbox",
+          "--single-process",
+          "--no-zygote",
+        ],
+        executablePath: process.env.NODE_ENV === "production" ?
+          process.env.PUPPETEER_EXECUTABLE_PATH :
+          puppeteer.executablePath(),
       });
   
       const page = await browser.newPage();
       await page.goto(dataInvesting.url);
   
-      // Aguarda o carregamento de elementos específicos (se necessário)
-      const tagSelector = dataInvesting.mainTag;
+
+      const tagSelector = tag;
       await page.waitForSelector(tagSelector);
   
-      // Extrai o valor da tag usando o Puppeteer
+
       const time = await page.$eval(
-        `tr${dataInvesting.mainTag} td.${dataInvesting.timeTag}`,
+        `tr${tag} td.${dataInvesting.timeTag}`,
         (element) => element.textContent.trim().replace(/^\s+|\n/g, '')
       );
       const currency = await page.$eval(
-        `tr${dataInvesting.mainTag} td.${dataInvesting.currecyTag}`,
+        `tr${tag} td.${dataInvesting.currecyTag}`,
         (element) => element.textContent.trim().replace(/^\s+|\n/g, '')
       );
       const event = await page.$eval(
-        `tr${dataInvesting.mainTag} td.${dataInvesting.eventTag} a`,
+        `tr${tag} td.${dataInvesting.eventTag} a`,
         (element) => element.textContent
       );
       const actual = await page.$eval(
-        `tr${dataInvesting.mainTag} td.${dataInvesting.actualTag}`,
+        `tr${tag} td.${dataInvesting.actualTag}`,
         (element) => element.textContent
       );
       const forecast = await page.$eval(
-        `tr${dataInvesting.mainTag} td.${dataInvesting.forecastTag}`,
+        `tr${tag} td.${dataInvesting.forecastTag}`,
         (element) => element.textContent
       );
       const previous = await page.$eval(
-        `tr${dataInvesting.mainTag} td.${dataInvesting.previousTag} span`,
+        `tr${tag} td.${dataInvesting.previousTag} span`,
         (element) => element.textContent
       );
   

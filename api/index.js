@@ -19,13 +19,8 @@ app.use(cors({
   credentials: true,
 }));
 
-//const investingData =  await getInvestingData()
-//const financialData =  await getFinancialJuiceData()
 
-route.get('/api/data-forex', async (req, res) => {
-  const forexData = await getForexFactoryData()
-  res.json(forexData);
-});
+
 
 route.post('/api/data-forex', async (req, res) => {
   const {tag} = req.body;
@@ -34,15 +29,22 @@ route.post('/api/data-forex', async (req, res) => {
   res.json(forexData);
 });
 
-route.get('/api/data-investing', async (req, res) => {
-  res.json(investingData);
-
-});
-
-route.get('/api/data-financial', async (req, res) => {
+route.post('/api/data-financial', async (req, res) => {
+  const {tag} = req.body;
+  console.log(tag)
+  const financialData = await getFinancialJuiceData(tag)
   res.json(financialData);
-
 });
+
+route.post('/api/data-investing', async (req, res) => {
+  const {tag} = req.body;
+  console.log(tag)
+  const investingData = await getInvestingData(tag)
+  res.json(investingData);
+});
+
+
+
 
 
 app.use(route)
