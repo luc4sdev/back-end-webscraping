@@ -4,12 +4,12 @@ import {getForexFactoryData} from './forex.js';
 import {getInvestingData} from './investing.js';
 import {getFinancialJuiceData} from './financial.js';
 import express from 'express';
-
+import cors from 'cors';
 
 
 const app = express();
 const route = Router()
-
+app.use(cors());
 
 
 
