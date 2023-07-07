@@ -22,7 +22,7 @@ const dataForexFactory = {
     try {
   
       const browser = await puppeteer.launch({
-        headless: 'new',
+        headless: false,
       });
   
       const page = await browser.newPage();
