@@ -20,7 +20,10 @@ app.use(cors({
 }));
 
 
-
+route.get('/api/data-forex', async (req, res) => {
+  const forexData = await getForexFactoryData('[data-eventid="129141"]')
+  res.json(forexData);
+});
 
 route.post('/api/data-forex', async (req, res) => {
   const {tag} = req.body;
@@ -37,6 +40,13 @@ route.post('/api/data-financial', async (req, res) => {
 });
 
 route.post('/api/data-investing', async (req, res) => {
+  const {tag} = req.body;
+  console.log(tag)
+  const investingData = await getInvestingData(tag)
+  res.json(investingData);
+});
+
+route.post('/api/data-economics', async (req, res) => {
   const {tag} = req.body;
   console.log(tag)
   const investingData = await getInvestingData(tag)
