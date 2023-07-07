@@ -4,11 +4,10 @@ const dataFinancialJuice = {
     name: 'financial juice',
     url: 'https://www.financialjuice.com/home',
     mainTag: '[data-id="06072023ADPNationalEmploymentUS"]',
-    firstRow: 'div-table-row',
+    row: 'div-table-row',
     timeTag: 'event-time',
     currecyTag: 'event-title',
     eventTag: 'event-title',
-    secondRow: 'div-table-row',
     actualTag: 'event-actual',
     forecastTag: 'event-forcast',
     previousTag: 'event-previous',
@@ -34,7 +33,7 @@ const dataFinancialJuice = {
       const tagSelector = dataFinancialJuice.mainTag;
       await page.waitForSelector(tagSelector);
   
-      const divs = await page.$$(`${dataFinancialJuice.mainTag} .${dataFinancialJuice.firstRow}`);
+      const divs = await page.$$(`${dataFinancialJuice.mainTag} .${dataFinancialJuice.row}`);
   
   
       if (divs.length >= 2) {

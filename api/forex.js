@@ -28,11 +28,11 @@ const dataForexFactory = {
       const page = await browser.newPage();
       await page.goto(dataForexFactory.url);
   
-      // Aguarda o carregamento de elementos específicos (se necessário)
+     
       const tagSelector = dataForexFactory.mainTag;
       await page.waitForSelector(tagSelector);
   
-      // Extrai o valor da tag usando o Puppeteer
+      
       const time = await page.$eval(
         `tr${dataForexFactory.mainTag} td.${dataForexFactory.timeTag} div`,
         (element) => element.textContent.trim().replace(/^\s+|\n/g, '')
