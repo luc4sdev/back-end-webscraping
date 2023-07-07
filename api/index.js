@@ -1,9 +1,9 @@
 
 import { Router } from 'express'
 import 'dotenv/config.js'
-import {getForexFactoryData} from './forex.js';
-import {getInvestingData} from './investing.js';
-import {getFinancialJuiceData} from './financial.js';
+import { getForexFactoryData } from './forex.js';
+import { getInvestingData } from './investing.js';
+import { getFinancialJuiceData } from './financial.js';
 import express from 'express';
 
 
@@ -13,11 +13,11 @@ const route = Router()
 
 
 
-const forexData =  await getForexFactoryData()
 //const investingData =  await getInvestingData()
 //const financialData =  await getFinancialJuiceData()
 
-route.get('/api/data-forex', (req, res) => {
+route.get('/api/data-forex', async (req, res) => {
+  const forexData = await getForexFactoryData()
   res.json(forexData);
 });
 
