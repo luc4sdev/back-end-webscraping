@@ -14,9 +14,9 @@ const route = Router()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://front-end-webscraping-git-main-luc4sdev.vercel.app/?vercelToolbarCode=GwFbJHqgkJLM57p",
   headers: ["Content-Type"],
-  credentials: true,
+  credentials: false,
 }));
 
 
