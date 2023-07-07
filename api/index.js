@@ -14,7 +14,7 @@ const route = Router()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const whitelist = ["http://localhost:5173"]
+const whitelist = ["https://front-end-webscraping-7yputwlhw-luc4sdev.vercel.app/"]
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
