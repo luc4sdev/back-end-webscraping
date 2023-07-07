@@ -13,28 +13,24 @@ const route = Router()
 
 
 
+const forexData =  await getForexFactoryData()
+//const investingData =  await getInvestingData()
+//const financialData =  await getFinancialJuiceData()
 
-
-route.get('/api/data-forex', async (req, res) => {
-  const data = await getForexFactoryData();
-  res.json({
-    dados: data
-  });
+route.get('/api/data-forex', (req, res) => {
+  res.json(forexData);
 });
 
 route.get('/api/data-investing', async (req, res) => {
-  const data = await getInvestingData();
-  res.json({
-    dados: data
-  });
+  res.json(investingData);
+
 });
 
 route.get('/api/data-financial', async (req, res) => {
-  const data = await getFinancialJuiceData();
-  res.json({
-    dados: data
-  });
+  res.json(financialData);
+
 });
+
 
 app.use(route)
 
