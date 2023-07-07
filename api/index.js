@@ -1,5 +1,6 @@
 
 import { Router } from 'express'
+import 'dotenv/config.js'
 import {getForexFactoryData} from './forex.js';
 import {getInvestingData} from './investing.js';
 import {getFinancialJuiceData} from './financial.js';
@@ -37,6 +38,6 @@ route.get('/api/data-financial', async (req, res) => {
 
 app.use(route)
 
-app.listen(3333, () => {
-  console.log(`Servidor iniciado na porta 3333`);
+app.listen(process.env.PORT ? Number(process.env.PORT) : 3333, () => {
+  console.log(`Servidor iniciado na porta ${process.env.PORT}`);
 });
