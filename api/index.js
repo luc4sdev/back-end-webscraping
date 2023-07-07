@@ -14,7 +14,7 @@ const route = Router()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const whitelist = ["https://front-end-webscraping-7yputwlhw-luc4sdev.vercel.app/"]
+const whitelist = ["http://localhost:5173","https://front-end-webscraping-7yputwlhw-luc4sdev.vercel.app"]
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -26,6 +26,12 @@ const corsOptions = {
   credentials: true,
 }
 app.use(cors(corsOptions))
+app.use((_req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+
+  next();
+});
 
 
 route.get('/api/data-forex', async (req, res) => {
