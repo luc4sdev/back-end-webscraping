@@ -23,6 +23,10 @@ var corsOptionsDelegate = function (req, callback) {
 }
 
 
+route.get('/api', cors(corsOptionsDelegate), async (req, res) => {
+  res.message('hello');
+});
+
 route.post('/api/data-forex', cors(corsOptionsDelegate), async (req, res) => {
   const { tag } = req.body;
   console.log(tag);
