@@ -10,8 +10,9 @@ const app = express();
 const route = Router();
 
 app.use(express.json());
+app.use(express.static('dist'))
 
-const whitelist = ["http://localhost:5173", process.env.URL];
+const whitelist = ["http://localhost:3333"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
