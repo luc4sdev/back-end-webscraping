@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer';
+require('dotenv/config.js')
+const puppeteer = require('puppeteer');
 
 
 
