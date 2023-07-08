@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 
 
-const getForexFactoryData async (tag) => {
+const getForexFactoryData async function(tag) => {
 
   const dataForexFactory = {
     name: 'forexfactory',
