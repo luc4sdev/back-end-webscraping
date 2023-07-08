@@ -1,5 +1,6 @@
-import 'dotenv/config.js';
-import puppeteer from 'puppeteer'
+require('dotenv/config.js')
+const puppeteer = require('puppeteer');
+
 
 export const scrapeLogic = async (res) => {
   const browser = await puppeteer.launch({
