@@ -11,7 +11,7 @@ const route = Router();
 
 app.use(express.json());
 
-const whitelist = ["http://localhost:5173", "https://front-v0x8.onrender.com"];
+const whitelist = ["http://localhost:5173", process.env.URL];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
