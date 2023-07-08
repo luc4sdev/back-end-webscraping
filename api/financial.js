@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 
 
 
-const getFinancialJuiceData async (tag) => {
+const getFinancialJuiceData async function(tag) => {
 
   const dataFinancialJuice = {
     name: 'financial',
