@@ -1,5 +1,5 @@
 const { Router } = require('express');
-require('dotenv/config.js');
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { getForexFactoryData } = require('./forex.js');
