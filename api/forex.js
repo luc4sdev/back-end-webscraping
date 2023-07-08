@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 
 
-export async function getForexFactoryData(tag) {
+const getForexFactoryData async (tag) => {
 
   const dataForexFactory = {
     name: 'forexfactory',
@@ -74,3 +74,5 @@ export async function getForexFactoryData(tag) {
     throw new Error('Ocorreu um erro na raspagem de dados');
   }
 };
+module.exports = { getForexFactoryData };
+
