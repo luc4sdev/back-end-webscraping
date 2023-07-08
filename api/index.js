@@ -5,6 +5,8 @@ import cors from 'cors';
 import { getForexFactoryData } from './forex.js';
 import { getInvestingData } from './investing.js';
 import { getFinancialJuiceData } from './financial.js';
+import { scrapeLogic } from './scrape.js';
+
 
 const app = express();
 const route = Router();
@@ -21,6 +23,10 @@ var corsOptionsDelegate = function (req, callback) {
   }
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
+
+route.get("/scrape",cors(corsOptionsDelegate), (req, res) => {
+  scrapeLogic(res);
+});
 
 
 route.get('/api', cors(corsOptionsDelegate), async (req, res) => {
