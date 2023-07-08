@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 
 
 
-  export async function getInvestingData(tag) {
+const getInvestingData async (tag) => {
 
     const dataInvesting = {
       name: 'investing',
@@ -122,4 +122,4 @@ import puppeteer from 'puppeteer';
         error: 'Ocorreu um erro na raspagem de dados'
       });
     }
-  };
+  };module.exports = { getInvestingData };
