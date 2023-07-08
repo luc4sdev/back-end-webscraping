@@ -24,7 +24,8 @@ var corsOptionsDelegate = function (req, callback) {
 
 
 route.get('/api', cors(corsOptionsDelegate), async (req, res) => {
-  res.send('hello');
+  const forexData = getForexFactoryData('[data-eventid="133619"]);
+  res.send(forexData);
 });
 
 route.post('/api/data-forex', cors(corsOptionsDelegate), async (req, res) => {
