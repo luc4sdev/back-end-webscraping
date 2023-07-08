@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 
 
 
-const getFinancialJuiceData async function(tag) => {
+const getFinancialJuiceData async (res, tag) => {
 
   const dataFinancialJuice = {
     name: 'financial',
@@ -25,9 +25,7 @@ const getFinancialJuiceData async function(tag) => {
     previous: '',
   }
 
-  try {
-
-    const browser = await puppeteer.launch({
+      const browser = await puppeteer.launch({
       // teste
       headless: 'new',
       args: [
@@ -39,6 +37,9 @@ const getFinancialJuiceData async function(tag) => {
       executablePath: process.env.NODE_ENV === "production" ?
         process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
     });
+
+  try {
+
 
     const page = await browser.newPage();
     await page.goto(dataFinancialJuice.url);
@@ -123,12 +124,12 @@ const getFinancialJuiceData async function(tag) => {
 
 
 
-  } catch (error) {
-    console.error('Erro na raspagem:', error);
-    res.status(500).json({
-      error: 'Ocorreu um erro na raspagem de dados'
-    });
-  }
+  } catch (e) {
+    console.error(e);
+    res.send(`Something went wrong while running Puppeteer: ${e}`);
+  } finally {
+    await browser.close();
+          }
 };
 
 module.exports = { getFinancialJuiceData };
