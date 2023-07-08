@@ -2,7 +2,7 @@ require('dotenv/config.js')
 const puppeteer = require('puppeteer');
 
 
-export const scrapeLogic = async (res) => {
+const scrapeLogic = async (res) => {
   const browser = await puppeteer.launch({
     headless: 'new',
     args: [
@@ -49,3 +49,4 @@ export const scrapeLogic = async (res) => {
     await browser.close();
   }
 };
+module.exports = { scrapeLogic };
