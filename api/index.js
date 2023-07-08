@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import 'dotenv/config.js';
 import express from 'express';
+import cors from 'cors';
 import { getForexFactoryData } from './forex.js';
 import { getInvestingData } from './investing.js';
 import { getFinancialJuiceData } from './financial.js';
@@ -9,9 +10,19 @@ const app = express();
 const route = Router();
 
 app.use(express.json());
-app.use(express.static('dist'))
 
-
+const whitelist = ["http://localhost:5173"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+};
+app.use(cors(corsOptions));
 
 route.post('/api/data-forex', async (req, res) => {
   const { tag } = req.body;
