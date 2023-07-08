@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 
 
-const getInvestingData async (res, tag) => {
+const getInvestingData = async (res, tag) => {
 
     const dataInvesting = {
       name: 'investing',
