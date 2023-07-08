@@ -22,9 +22,7 @@ export async function getForexFactoryData(tag) {
     previous: '',
   }
   try {
-
     const browser = await puppeteer.launch({
-      // teste
       headless: 'new',
       args: [
         "--disable-setuid-sandbox",
@@ -32,62 +30,30 @@ export async function getForexFactoryData(tag) {
         "--single-process",
         "--no-zygote",
       ],
-      executablePath: process.env.NODE_ENV === "production" ?
-        process.env.PUPPETEER_EXECUTABLE_PATH :
-        puppeteer.executablePath(),
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
     });
 
     const page = await browser.newPage();
-    await page.goto(dataForexFactory.url);
-
+    await page.goto(dataForexFactory.url, { waitUntil: 'domcontentloaded' });
 
     const tagSelector = tag;
     await page.waitForSelector(tagSelector);
 
-
-    const time = await page.$eval(
-      `tr${tag} td.${dataForexFactory.timeTag} div`,
-      (element) => element.textContent.trim().replace(/^\s+|\n/g, '')
-    );
-    const currency = await page.$eval(
-      `tr${tag} td.${dataForexFactory.currecyTag}`,
-      (element) => element.textContent.trim().replace(/^\s+|\n/g, '')
-    );
-    const event = await page.$eval(
-      `tr${tag} td.${dataForexFactory.eventTag} div span`,
-      (element) => element.textContent.trim().replace(/^\s+|\n/g, '')
-    );
-
-    const actual = await page.$eval(
-      `tr${tag} td.${dataForexFactory.actualTag} span`,
-      (spanElement) => spanElement.textContent.trim().replace(/^\s+|\n/g, '')
-    ).catch(() => {
-      return page.$eval(
-        `tr${tag} td.${dataForexFactory.actualTag}`,
-        (tdElement) => tdElement.textContent.trim().replace(/^\s+|\n/g, '')
-      );
-    });
-
-    const forecast = await page.$eval(
-      `tr${tag} td.${dataForexFactory.forecastTag} span`,
-      (spanElement) => spanElement.textContent.trim().replace(/^\s+|\n/g, '')
-    ).catch(() => {
-      return page.$eval(
-        `tr${tag} td.${dataForexFactory.forecastTag}`,
-        (tdElement) => tdElement.textContent.trim().replace(/^\s+|\n/g, '')
-      );
-    });
-
-    const previous = await page.$eval(
-      `tr${tag} td.${dataForexFactory.previousTag} span`,
-      (spanElement) => spanElement.textContent.trim().replace(/^\s+|\n/g, '')
-    ).catch(() => {
-      return page.$eval(
-        `tr${tag} td.${dataForexFactory.previousTag}`,
-        (tdElement) => tdElement.textContent.trim().replace(/^\s+|\n/g, '')
-      );
-    });
-
+    const [time, currency, event, actual, forecast, previous] =
+      await page.$$eval(tagSelector, (rows) => {
+        const row = rows[0];
+        return [
+          row.querySelector('.calendar__time div').textContent.trim().replace(/^\s+|\n/g, ''),
+          row.querySelector('.calendar__currency').textContent.trim().replace(/^\s+|\n/g, ''),
+          row.querySelector('.calendar__event div span').textContent.trim().replace(/^\s+|\n/g, ''),
+          row.querySelector('.calendar__actual span')?.textContent?.trim().replace(/^\s+|\n/g, '') || row.querySelector('.calendar__actual').textContent.trim().replace(/^\s+|\n/g, ''),
+          row.querySelector('.calendar__forecast span')?.textContent?.trim().replace(/^\s+|\n/g, '') || row.querySelector('.calendar__forecast').textContent.trim().replace(/^\s+|\n/g, ''),
+          row.querySelector('.calendar__previous span')?.textContent?.trim().replace(/^\s+|\n/g, '') || row.querySelector('.calendar__previous').textContent.trim().replace(/^\s+|\n/g, ''),
+        ];
+      });
 
     await browser.close();
 
@@ -99,11 +65,8 @@ export async function getForexFactoryData(tag) {
     dataForexFactory.previous = previous;
 
     return dataForexFactory;
-
   } catch (error) {
     console.error('Erro na raspagem:', error);
-    res.status(500).json({
-      error: 'Ocorreu um erro na raspagem de dados'
-    });
+    throw new Error('Ocorreu um erro na raspagem de dados');
   }
 };
