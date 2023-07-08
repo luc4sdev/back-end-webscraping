@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 
 
 
-export async function getFinancialJuiceData(tag) {
+const getFinancialJuiceData async (tag) => {
 
   const dataFinancialJuice = {
     name: 'financial',
@@ -129,3 +129,5 @@ export async function getFinancialJuiceData(tag) {
     });
   }
 };
+
+module.exports = { getFinancialJuiceData };
