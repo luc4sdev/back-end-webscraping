@@ -1,4 +1,4 @@
-import 'dotenv'
+import 'dotenv/config.js';
 import puppeteer from 'puppeteer'
 
 export const scrapeLogic = async (res) => {
