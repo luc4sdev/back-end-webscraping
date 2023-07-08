@@ -1,11 +1,12 @@
-import { Router } from 'express';
-import 'dotenv/config.js';
-import express from 'express';
-import cors from 'cors';
-import { getForexFactoryData } from './forex.js';
-import { getInvestingData } from './investing.js';
-import { getFinancialJuiceData } from './financial.js';
-import { scrapeLogic } from './scrapeLogic.js';
+const { Router } = require('express');
+require('dotenv/config.js');
+const express = require('express');
+const cors = require('cors');
+const { getForexFactoryData } = require('./forex.js');
+const { getInvestingData } = require('./investing.js');
+const { getFinancialJuiceData } = require('./financial.js');
+const { scrapeLogic } = require('./scrapeLogic.js');
+
 
 
 const app = express();
