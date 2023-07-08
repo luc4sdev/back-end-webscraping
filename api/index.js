@@ -31,29 +31,25 @@ route.get("/scrape",cors(corsOptionsDelegate), (req, res) => {
 
 
 route.get('/api', cors(corsOptionsDelegate), async (req, res) => {
-  const forexData = await getForexFactoryData("[data-eventid=\"133619\"]");
-  res.send(forexData);
+  getForexFactoryData(res,"[data-eventid=\"133619\"]");
 });
 
 route.post('/api/data-forex', cors(corsOptionsDelegate), async (req, res) => {
   const { tag } = req.body;
   console.log(tag);
-  const forexData = await getForexFactoryData(tag);
-  res.json(forexData);
+  getForexFactoryData(res, tag);
 });
 
 route.post('/api/data-financial',cors(corsOptionsDelegate), async (req, res) => {
   const { tag } = req.body;
   console.log(tag);
-  const financialData = await getFinancialJuiceData(tag);
-  res.json(financialData);
+  getFinancialJuiceData(res, tag);
 });
 
 route.post('/api/data-investing',cors(corsOptionsDelegate), async (req, res) => {
   const { tag } = req.body;
   console.log(tag);
-  const investingData = await getInvestingData(tag);
-  res.json(investingData);
+ getInvestingData(res, tag);
 });
 
 
