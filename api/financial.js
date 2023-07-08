@@ -118,9 +118,7 @@ const getFinancialJuiceData async (res, tag) => {
 
     
 
-    await browser.close();
-    
-    return dataFinancialJuice;
+    res.send(dataFinancialJuice)
 
 
 
