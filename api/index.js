@@ -5,7 +5,7 @@ import cors from 'cors';
 import { getForexFactoryData } from './forex.js';
 import { getInvestingData } from './investing.js';
 import { getFinancialJuiceData } from './financial.js';
-import { scrapeLogic } from './scrape.js';
+import { scrapeLogic } from './scrapeLogic.js';
 
 
 const app = express();
