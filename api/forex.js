@@ -55,7 +55,7 @@ export async function getForexFactoryData(tag) {
         ];
       });
 
-    await browser.close();
+
 
     dataForexFactory.time = time;
     dataForexFactory.currency = currency;
@@ -64,7 +64,10 @@ export async function getForexFactoryData(tag) {
     dataForexFactory.forecast = forecast;
     dataForexFactory.previous = previous;
 
+    await browser.close();
+
     return dataForexFactory;
+    
   } catch (error) {
     console.error('Erro na raspagem:', error);
     throw new Error('Ocorreu um erro na raspagem de dados');

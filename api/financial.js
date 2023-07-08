@@ -112,11 +112,12 @@ export async function getFinancialJuiceData(tag) {
       }
     }
 
-    await browser.close();
+
 
     
 
-
+    await browser.close();
+    
     return dataFinancialJuice;
 
 

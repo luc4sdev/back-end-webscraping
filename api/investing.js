@@ -71,7 +71,7 @@ import puppeteer from 'puppeteer';
       );
   
   
-      await browser.close();
+
   
       dataInvesting.time = time;
       dataInvesting.time = time;
@@ -81,9 +81,11 @@ import puppeteer from 'puppeteer';
       dataInvesting.forecast = forecast;
       dataInvesting.previous = previous;
 
+      await browser.close();
+      
       return dataInvesting;
 
-  
+    
   
     } catch (error) {
       console.error('Erro na raspagem:', error);

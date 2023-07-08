@@ -83,8 +83,8 @@ export async function getTrandingEconomicsData(tag) {
 
     }
 
-    await browser.close();
 
+    await browser.close();
 
     return dataTrandingEconomics;
 
