@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 
 
-const getInvestingData async function(tag) => {
+const getInvestingData async (res, tag) => {
 
     const dataInvesting = {
       name: 'investing',
@@ -22,8 +22,8 @@ const getInvestingData async function(tag) => {
       forecast: '',
       previous: '',
     }
-    try {
-  
+
+    
       const browser = await puppeteer.launch({
         // teste
         headless: 'new',
@@ -37,6 +37,9 @@ const getInvestingData async function(tag) => {
           process.env.PUPPETEER_EXECUTABLE_PATH :
           puppeteer.executablePath(),
       });
+    
+    try {
+  
   
       const page = await browser.newPage();
       await page.goto(dataInvesting.url);
@@ -111,16 +114,15 @@ const getInvestingData async function(tag) => {
       dataInvesting.event = event;
       dataInvesting.previous = previous;
 
-      await browser.close();
-      
-      return dataInvesting;
+      res.send(dataInvesting)
 
     
   
-    } catch (error) {
-      console.error('Erro na raspagem:', error);
-      res.status(500).json({
-        error: 'Ocorreu um erro na raspagem de dados'
-      });
-    }
-  };module.exports = { getInvestingData };
+    } catch (e) {
+    console.error(e);
+    res.send(`Something went wrong while running Puppeteer: ${e}`);
+  } finally {
+    await browser.close();
+                                 }
+  };
+module.exports = { getInvestingData };
