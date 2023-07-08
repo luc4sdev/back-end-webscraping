@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 
 
-const getForexFactoryData async function(tag) => {
+const getForexFactoryData async (res, tag) => {
 
   const dataForexFactory = {
     name: 'forexfactory',
@@ -22,8 +22,8 @@ const getForexFactoryData async function(tag) => {
     forecast: '',
     previous: '',
   }
-  try {
-    const browser = await puppeteer.launch({
+
+  const browser = await puppeteer.launch({
       headless: 'new',
       args: [
         "--disable-setuid-sandbox",
@@ -36,6 +36,8 @@ const getForexFactoryData async function(tag) => {
           ? process.env.PUPPETEER_EXECUTABLE_PATH
           : puppeteer.executablePath(),
     });
+  
+  try {
 
     const page = await browser.newPage();
     await page.goto(dataForexFactory.url, { waitUntil: 'domcontentloaded' });
@@ -65,13 +67,13 @@ const getForexFactoryData async function(tag) => {
     dataForexFactory.forecast = forecast;
     dataForexFactory.previous = previous;
 
-    await browser.close();
-
-    return dataForexFactory;
+    res.send(dataForexFactory)
     
-  } catch (error) {
-    console.error('Erro na raspagem:', error);
-    throw new Error('Ocorreu um erro na raspagem de dados');
+  }  catch (e) {
+    console.error(e);
+    res.send(`Something went wrong while running Puppeteer: ${e}`);
+  } finally {
+    await browser.close();
   }
 };
 module.exports = { getForexFactoryData };
