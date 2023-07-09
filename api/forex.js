@@ -43,7 +43,7 @@ const getForexFactoryData = async (res, tag) => {
     await page.goto(dataForexFactory.url, { waitUntil: 'domcontentloaded' });
 
     const tagSelector = tag;
-    await page.waitForSelector(tagSelector);
+    await page.waitForSelector(tagSelector, { visible: true });
 
     const [time, currency, event, actual, forecast, previous] =
       await page.$$eval(tagSelector, (rows) => {
