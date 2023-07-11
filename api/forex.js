@@ -3,11 +3,11 @@ const puppeteer = require('puppeteer');
 
 
 
-const getForexFactoryData = async (res, tag) => {
+const getForexFactoryData = async (tag, url) => {
 
   const dataForexFactory = {
     name: 'forexfactory',
-    url: 'https://www.forexfactory.com/calendar',
+    url: url,
     mainTag: tag,
     timeTag: 'calendar__time',
     currecyTag: 'calendar__currency',
@@ -40,7 +40,7 @@ const getForexFactoryData = async (res, tag) => {
   try {
 
     const page = await browser.newPage();
-    await page.goto(dataForexFactory.url, { waitUntil: 'domcontentloaded' });
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
 
     const tagSelector = tag;
     await page.waitForSelector(tagSelector, { visible: true });
@@ -67,11 +67,10 @@ const getForexFactoryData = async (res, tag) => {
     dataForexFactory.forecast = forecast;
     dataForexFactory.previous = previous;
 
-    res.send(dataForexFactory)
+    return dataForexFactory;
     
   }  catch (e) {
     console.error(e);
-    res.send(`Something went wrong while running Puppeteer: ${e}`);
   } finally {
     await browser.close();
   }

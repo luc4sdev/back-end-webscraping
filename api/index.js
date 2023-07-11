@@ -1,61 +1,65 @@
-const { Router } = require('express');
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { getForexFactoryData } = require('./forex.js');
-const { getInvestingData } = require('./investing.js');
-const { getFinancialJuiceData } = require('./financial.js');
-const { scrapeLogic } = require('./scrapeLogic.js');
-
-
-
+const express = require("express");
 const app = express();
-const route = Router();
+const http = require("http");
+const {
+    getForexFactoryData
+} = require('./forex.js');
 
-app.use(express.json());
 
-var allowlist = ['https://front-v0x8.onrender.com/', 'http://localhost:5173']
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false } // disable CORS for this request
-  }
-  callback(null, corsOptions) // callback expects two parameters: error and options
-}
+const {
+    Server
+} = require("socket.io");
 
-route.get("/scrape",cors(corsOptionsDelegate), (req, res) => {
-  scrapeLogic(res);
+const cors = require("cors");
+
+const {
+    getFinancialJuiceData
+} = require("./financial.js");
+const {
+    getInvestingData
+} = require("./investing.js");
+
+app.use(cors());
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+    },
 });
 
 
-route.get('/api', cors(corsOptionsDelegate), async (req, res) => {
-  getForexFactoryData(res,"[data-eventid=\"133619\"]");
+
+io.on("connection", (socket) => {
+    console.log(`User Connected: ${socket.id}`);
+
+
+    socket.on("send_forex_parameters", async (parameters) => {
+
+        const newValue = await getForexFactoryData(parameters.tag, parameters.url);
+        console.log(newValue)
+        io.emit('forexData', newValue);
+    });
+
+    socket.on("send_financial_tag", async (tag) => {
+
+        const newValue = await getFinancialJuiceData(tag);
+        console.log(newValue)
+        io.emit('financialData', newValue);
+
+    });
+
+    socket.on("send_investing_parameters", async (parameters) => {
+
+        const newValue = await getInvestingData(parameters.tag, parameters.url);
+        console.log(newValue)
+        io.emit('investingData', newValue);
+    });
+
 });
 
-route.post('/api/data-forex', cors(corsOptionsDelegate), async (req, res) => {
-  const { tag } = req.body;
-  console.log(tag);
-  getForexFactoryData(res, tag);
-});
-
-route.post('/api/data-financial',cors(corsOptionsDelegate), async (req, res) => {
-  const { tag } = req.body;
-  console.log(tag);
-  getFinancialJuiceData(res, tag);
-});
-
-route.post('/api/data-investing',cors(corsOptionsDelegate), async (req, res) => {
-  const { tag } = req.body;
-  console.log(tag);
- getInvestingData(res, tag);
-});
-
-
-app.use(route);
-
-const port = process.env.PORT ? Number(process.env.PORT) : 3333;
-app.listen(port, () => {
-  console.log(`Servidor iniciado na porta ${port}`);
+server.listen(3001, () => {
+    console.log("SERVER IS RUNNING");
 });

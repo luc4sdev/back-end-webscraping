@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 
 
 
-const getFinancialJuiceData = async (res, tag) => {
+const getFinancialJuiceData = async (tag) => {
 
   const dataFinancialJuice = {
     name: 'financial',
@@ -118,13 +118,12 @@ const getFinancialJuiceData = async (res, tag) => {
 
     
 
-    res.send(dataFinancialJuice)
+    return dataFinancialJuice;
 
 
 
   } catch (e) {
     console.error(e);
-    res.send(`Something went wrong while running Puppeteer: ${e}`);
   } finally {
     await browser.close();
           }
